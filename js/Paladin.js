@@ -3,7 +3,7 @@ class Paladin extends Character {
         super(name, hp, dmg, mana, status);
     }
     
-    special = () => {
+    special = (victim) => {
         this.hp = this.hp + 5;
         victim.hp = victim.hp - 4;
         this.mana = this.mana - 40;
