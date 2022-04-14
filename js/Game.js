@@ -29,57 +29,37 @@ class Game {
     // Lance un tour complet de jeu si la conditions de victoire n'est pas remplie
     newTurn = () => {
         // mettre dans un tableau 
-        while(this.turnLeft > 0 || this.fighters.length == 1){
-            this.fighters.sort(() => Math.random() - 0.5).forEach(fighter => {
+        while(this.turnLeft > 0 && this.fighters.filter(fighter => fighter.status == "playing").length > 1) {
+            this.fighters.filter(fighter => fighter.status == "playing").sort(() => Math.random() - 0.5).forEach(fighter => {
+                this.watchStats();
                 let turn = new Turn();
-                turn.startTurn(this.fighters, fighter, this.humanPlayer, this.enemies);
-                this.fighters = this.fighters.filter(brawler => brawler.status !== "loser");
+                turn.startTurn(this.fighters.filter(brawler => brawler.status == "playing"), fighter, this.humanPlayer, this.enemies);
             });
             
             this.turnLeft--;
             console.log("Tours avant la fin de la bagarre " + this.turnLeft + ".");
         }  
+        
         // tout les fighter avec le status "playing" son déclarer "winner"
-        this.fighters = this.fighters.filter(brawler => brawler.status === "playing");
-        if (this.fighters.length == 1) {
-            console.log(`${this.fighters[0].name} a gagné la bagarre !`);
-        } else if (this.fighter.length < 1) {
-            console.log(`Voici les gagnants de la bagarre: ${this.fighters.map(fighter => fighter.name).join(", ")}`);
+        var remainingPlayers = this.fighters.filter(fighter => fighter.status == "playing")
+        if (remainingPlayers.length == 1) {
+            document.querySelector(".winner").innerHTML = `${remainingPlayers[0].name} a gagné la bagarre !`;
+        } else {
+            document.querySelector(".winner").innerHTML = `Voici les gagnants de la bagarre: ${remainingPlayers.map(player => player.name).join(", ")}`;
         } 
         
     }
 
     // Donne les statistiques de partie 
     watchStats = () => {
-        if(paladin.status == "loser") {
-            console.log("Le paladin est un misérable faible.");
-        } else {
-            console.log("Paladin: " + this.paladin.name + " " + this.paladin.health + " " + this.paladin.mana + " ");
-        }
-
-        if(fighter.status == "loser") {
-            console.log("Le guerrier est un misérable faible.");
-        } else {
-            console.log("Fitgher: " + this.fighter.name + " " + this.fighter.health + " " + this.fighter.mana + " ");
-        }
-
-        if(monk.status == "loser") {
-            console.log("Le monnk est un misérable faible.");
-        } else {
-            console.log("Monk: " + this.monk.name + " " + this.monk.health + " " + this.monk.mana + " ");
-        }
-
-        if(assassin.status == "loser") {
-            console.log("L'assassin est un misérable faible.");
-        } else {
-            console.log("Assassin: " + this.assassin.name + " " + this.assassin.health + " " + this.assassin.mana + " ");
-        }
-
-        if(berzerker.status == "loser") {
-            console.log("Le berzerker est un misérable faible.");
-        } else {
-            console.log("Berzerker: " + this.berzerker.name + " " + this.berzerker.health + " " + this.berzerker.mana + " ");
-        }
+        document.querySelector(".player-stats").innerHTML = "Tes stats " + this.humanPlayer.name + " : [HP]= " + this.humanPlayer.hp + "    [MANA] : " + this.humanPlayer.mana
+        document.querySelector(".turn-left").innerHTML = `Tours restants : ${this.turnLeft}`
+        this.fighters.forEach(fighter => {
+            document.querySelector(`.${fighter.name}`).innerHTML = "";
+            if (fighter.status == "playing"  && fighter != this.humanPlayer) {
+                document.querySelector(`.${fighter.name}`).innerHTML = `${fighter.name} : [HP]=${fighter.hp}   [MANA]=${fighter.mana}`;
+            }
+        });
     }
 }
 
