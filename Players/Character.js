@@ -4,7 +4,7 @@ class Character {
         this.hp = hp;
         this.dmg = dmg;
         this.mana = mana;
-        this.status = 'alive';
+        this.status = 'playing';
     }
 
     takeDamage = (damage) => {
@@ -15,7 +15,7 @@ class Character {
             this.status = "loser";
             console.log("Adieu monde cruel, " + this.name + "!");
         } else {
-            this.status = "alive";
+            this.status = "playing";
             console.log("misérable insecte, il me reste " + this.hp + " points de vie avant la mort!");
         }
     }

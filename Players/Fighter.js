@@ -3,11 +3,10 @@ class Fighter extends Character {
         super(name, hp, dmg, mana, status);
     }
 
-    darkVision = () => {
+    special = () => {
         victim.hp = victim.hp - 5;
         this.mana = this.mana - 20;
         console.log(this.name + " utilise la vision sombre donne 5 de dégats et consomme 20 mana!");
     }
 }
 
-const fighter = new Fighter("Grace");
