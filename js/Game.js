@@ -1,12 +1,12 @@
 class Game {
   constructor(paladin, fighter, monk, assassin, berzerker, turnLeft) {
-    var _0x7e98=["\x42\x69\x65\x6E\x76\x65\x6E\x75\x65\x20\xE0\x20\x4C\x61\x47\x72\x6F\x73\x73\x65\x42\x61\x67\x61\x72\x72\x65\x20\x21\x21\x21\x21\x21","\x6C\x6F\x67"];console[_0x7e98[1]](_0x7e98[0])    
     this.paladin = new Paladin();
     this.fighter = new Fighter();
     this.monk = new Monk();
     this.assassin = new Assassin();
     this.berzerker = new Berzerker();
     this.wizard = new Wizard();
+    this.hacker = new Hacker();
     this.turnLeft = 10;
     this.fighters = [
       this.paladin,
@@ -15,6 +15,7 @@ class Game {
       this.assassin,
       this.berzerker,
       this.wizard,
+      this.hacker
     ];
     this.initHumanPlayer();
     this.newTurn();
