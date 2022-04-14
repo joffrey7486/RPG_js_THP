@@ -8,6 +8,8 @@ class Turn {
     // Affiche It's time for Y to play
 
     startTurn = (fighters, fighter, humanPlayer, enemies) => {
+        clearInterval(10000);
+        console.log("##################################################")
         console.log("Il est temps pour " + fighter.name + " de TAPER!!!");
         
         let enemy;
@@ -35,7 +37,10 @@ class Turn {
                 fighter.dealDamage(enemy);
             }
         } else {
-            
+           let computerEnemies = fighters.filter(brawler => brawler.name !== fighter.name);
+           // fighter attaque un computerEnemy random
+            enemy = computerEnemies[Math.floor(Math.random() * computerEnemies.length)];
+            fighter.dealDamage(enemy);
         }
     }
 }

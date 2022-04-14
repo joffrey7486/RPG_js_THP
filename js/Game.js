@@ -28,20 +28,25 @@ class Game {
     
     // Lance un tour complet de jeu si la conditions de victoire n'est pas remplie
     newTurn = () => {
-        let eliminated = this.fighters.filter(brawler => brawler.status == "loser");
-        console.log(`Les misérables insectes: ${eliminated}`);
-
-        while(this.turnLeft > 0 || eliminated.length == 5){
+        // mettre dans un tableau 
+        while(this.turnLeft > 0 || this.fighters.length == 1){
             this.fighters.sort(() => Math.random() - 0.5).forEach(fighter => {
                 let turn = new Turn();
                 turn.startTurn(this.fighters, fighter, this.humanPlayer, this.enemies);
                 this.fighters = this.fighters.filter(brawler => brawler.status !== "loser");
             });
             
-            
             this.turnLeft--;
             console.log("Tours avant la fin de la bagarre " + this.turnLeft + ".");
         }  
+        // tout les fighter avec le status "playing" son déclarer "winner"
+        this.fighters = this.fighters.filter(brawler => brawler.status === "playing");
+        if (this.fighters.length == 1) {
+            console.log(`${this.fighters[0].name} a gagné la bagarre !`);
+        } else if (this.fighter.length < 1) {
+            console.log(`Voici les gagnants de la bagarre: ${this.fighters.map(fighter => fighter.name).join(", ")}`);
+        } 
+        
     }
 
     // Donne les statistiques de partie 
